@@ -35,7 +35,7 @@ To run the Producer DAG, ensure the following connection is configured in your A
 
 | Connection ID         | Type                | Permissions                          |
 | --------------------- | ------------------- | ------------------------------------ |
-| `aws_fe_srvc_account` | Amazon Web Services | `s3:PutObject` on thumbtack-poc-staging |
+| `thumbtack` | Amazon Web Services | `s3:PutObject` on thumbtack-poc-staging |
 
 Deploy Your Project Locally
 ===========================
