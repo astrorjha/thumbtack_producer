@@ -296,7 +296,7 @@ def generate_messy_text():
     doc_md=__doc__,
     tags=["airflow_3.1", "producer", "thumbtack", "geography", "messy-data"],
 )
-def thumbtack_step0_producer():
+def thumbtack_producer():
     @task
     def simulate_user_traffic(bucket_name: str, **kwargs):
         """Calculates spike volume and uploads a Parquet batch to S3."""
