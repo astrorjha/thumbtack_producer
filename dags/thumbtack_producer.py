@@ -29,8 +29,9 @@ import numpy as np
 import pandas as pd
 import pendulum
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-from airflow.sdk import dag, task
+from airflow.sdk import dag, Dataset, task
 from airflow.timetables.trigger import MultipleCronTriggerTimetable
+
 
 # --- CONFIGURATION & CONSTANTS ---
 S3_BUCKET = "thumbtack-poc-staging"
@@ -286,12 +287,15 @@ def generate_messy_text():
 
 # --- DAG DEFINITION (Airflow 3.1 TaskFlow API) ---
 
+# Global definition of the data location
+INBOUND_DATA = Dataset("s3://thumbtack-poc-staging/inbound/")
 
 @dag(
     dag_id="thumbtack_producer",
     start_date=pendulum.datetime(2026, 3, 11, tz="America/New_York"),
     # Strictly 8 AM to 7 PM EST per Thumbtack Business Hour requirements
     schedule=MultipleCronTriggerTimetable("0 8-19 * * *", timezone="America/New_York"),
+    outlets=[INBOUND_DATA],
     catchup=False,
     doc_md=__doc__,
     tags=["airflow_3.1", "producer", "thumbtack", "geography", "messy-data"],
