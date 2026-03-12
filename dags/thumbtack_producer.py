@@ -330,6 +330,7 @@ def thumbtack_producer():
         # Memory-efficient buffer for S3 upload
         buffer = io.BytesIO()
         df.to_parquet(buffer, index=False)
+        buffer.seek(0)  # Reset cursor to start so S3 reads the full content
 
         s3 = S3Hook(aws_conn_id=AWS_CONN_ID)
         ds_str = logical_date.strftime("%Y-%m-%d")
